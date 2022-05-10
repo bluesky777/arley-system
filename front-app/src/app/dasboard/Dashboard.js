@@ -1,9 +1,7 @@
 import { Layout, Menu } from 'antd'
 import Sidebar from './Sidebar'
 import './styles.css'
-import { Routes, Route } from 'react-router-dom'
-import { Products } from '../products/Products'
-import { Ventas } from '../ventas/Ventas'
+import { Outlet } from 'react-router-dom'
 
 const { Header, Content } = Layout
 
@@ -31,10 +29,7 @@ const Dashboard = () => {
           <Content
             className='site-layout-background'
           >
-            <Routes>
-              <Route path='productos' element={<Products />} />
-              <Route path='ventas' element={<Ventas />} />
-            </Routes>
+            <Outlet />
           </Content>
         </Layout>
       </Layout>
