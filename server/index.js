@@ -21,5 +21,5 @@ app.get('*', (_, res) => {
 	};
 });
 // start the server listening for requests
-app.listen(process.env.PORT || 3002, 
+app.listen(process.env.PORT || 3001, 
 	() => console.log("Server is running..."));

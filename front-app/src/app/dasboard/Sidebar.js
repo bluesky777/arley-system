@@ -1,5 +1,5 @@
 import { Layout, Menu } from 'antd'
-import { AppstoreOutlined, SnippetsOutlined } from '@ant-design/icons'
+import { AppstoreOutlined, SnippetsOutlined, GiftOutlined, BankOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
@@ -7,8 +7,11 @@ const { Sider } = Layout
 
 const rootSubmenuKeys = ['sub1', 'sub2']
 
+const smallScreen = document.body.clientWidth < 576
+
 const Sidebar = () => {
   const [openKeys, setOpenKeys] = useState(['sub1'])
+  const [collapsed, setCollapsed] = useState(smallScreen)
 
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1)
@@ -20,8 +23,12 @@ const Sidebar = () => {
     }
   }
 
+  const onCollapse = (collapsed) => {
+    setCollapsed(collapsed)
+  }
+
   return (
-    <Sider>
+    <Sider collapsible collapsed={collapsed} collapsedWidth={60} defaultCollapsed={collapsed} onCollapse={onCollapse}>
       <div className='logo-sidebar'></div>
       <Menu
         mode='inline'
@@ -31,7 +38,7 @@ const Sidebar = () => {
         selectedKeys={[window.location.pathname]}
       >
         <Menu.Item key='inicio'>
-          <AppstoreOutlined />
+          <BankOutlined />
           <span>Inicio</span>
           <NavLink to='inicio' />
         </Menu.Item>
@@ -41,7 +48,7 @@ const Sidebar = () => {
           <NavLink to='ventas' />
         </Menu.Item>
         <Menu.Item key='productos'>
-          <AppstoreOutlined />
+          <GiftOutlined />
           <span>Productos</span>
           <NavLink to='productos' />
         </Menu.Item>

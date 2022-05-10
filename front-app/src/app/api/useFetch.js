@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import fetch from './fetch'
 
 export default function useFetch (url) {
-  const [data, setData] = useState(null)
+  const [ventas, setVentas] = useState(null)
+  const [productos, setProductos] = useState(null)
+  const [clientes, setClientes] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -10,8 +12,10 @@ export default function useFetch (url) {
     (async function () {
       try {
         setLoading(true)
-        const response = await fetch.get(`/${url}`)
-        setData(response.data)
+        const { data } = await fetch.get(`/${url}`)
+        setProductos(data.productos)
+        setVentas(data.ventas)
+        setClientes(data.clientes)
       } catch (err) {
         setError({ err })
       } finally {
@@ -20,5 +24,5 @@ export default function useFetch (url) {
     })()
   }, [url])
 
-  return { data, error, loading }
+  return { productos, ventas, clientes, error, loading, setVentas }
 }

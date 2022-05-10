@@ -1,4 +1,3 @@
-const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 
 var DbConnection = function () {
@@ -10,8 +9,7 @@ var DbConnection = function () {
             //const uri = "mongodb+srv://admin:PASSWORD@arley.jbqv8.mongodb.net/arleyDB?retryWrites=true&w=majority";
             const uri = process.env.MONGODB_URI;
             let _db = await mongoose.connect(uri, { useUnifiedTopology: true })
-            //let _db = await MongoClient.connect(uri, { useUnifiedTopology: true });
-            //const database = _db.db('arleyDB');
+            console.log('Conected')
             return database
         } catch (e) {
             return e;
@@ -23,7 +21,6 @@ var DbConnection = function () {
             if (db !== null) {
                 return db; // db connection is already instanced
             } else {
-                console.log('Conected')
                 db = await DbConnect(); // getting new db connection
                 return db; 
             }
