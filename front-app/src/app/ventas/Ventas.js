@@ -1,5 +1,5 @@
 import { Row, Col, Table, Alert } from 'antd'
-import useFetch from '../api/useFetch'
+import useFetchVentas from '../api/useFetchVentas'
 import VentaNew from './VentaNew'
 import { useDefaultData } from './useDefaultData'
 import './styles.css'
@@ -19,7 +19,7 @@ export const Ventas = () => {
     error,
     loading,
     setVentas
-  } = useFetch('ventas')
+  } = useFetchVentas('ventas')
   const columns = useDefaultData(handleClientClick, filteredInfo)
   const [ventaActual, setVentaActual] = useState(null)
 
@@ -68,7 +68,12 @@ export const Ventas = () => {
             <Col span={24}>
               {
                 !ventaActual &&
-                <VentaNew productos={productos} clientes={clientes} venta={ventaActual} handleCreated={handleCreated} />
+                <VentaNew
+                  productos={productos}
+                  clientes={clientes}
+                  venta={ventaActual}
+                  handleCreated={handleCreated}
+                />
               }
               <Table dataSource={ventas} columns={columns} onChange={handleChangeTable} />
               {

@@ -88,7 +88,7 @@ const VentaNew = ({ productos, clientes, venta, handleCreated }) => {
   }
 
   return (
-    <Card title='Nueva venta'>
+    <Card title='Nueva venta' className={'hidden-print'}>
       <Row>
         <Col span={24}>
           <Select

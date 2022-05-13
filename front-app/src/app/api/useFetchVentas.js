@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import fetch from './fetch'
 
-export default function useFetch (url) {
+export default function useFetchVentas (url) {
   const [ventas, setVentas] = useState(null)
   const [productos, setProductos] = useState(null)
   const [clientes, setClientes] = useState(null)

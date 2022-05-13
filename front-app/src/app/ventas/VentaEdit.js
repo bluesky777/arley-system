@@ -83,6 +83,17 @@ const VentaEdit = ({ productos, clientes, ventaActual, handleUpdated, handleCanc
     setNuevo({ ...nuevo, pagado: e.target.value })
   }
 
+  const handleEliminar = async () => {
+    try {
+      await fetch.delete('ventas/desactivar/' + nuevo._id, { id: nuevo._id })
+      Modal.success({
+        title: 'Eliminado correctamente'
+      })
+    } catch (err) {
+      message.error('Error al intentar eliminar venta.')
+    }
+  }
+
   const footer = () => {
     const total = getTotalVenta(nuevo.productos, nuevo)
     return (
@@ -93,7 +104,7 @@ const VentaEdit = ({ productos, clientes, ventaActual, handleUpdated, handleCanc
   }
 
   return (
-    <Card title='Editar venta'>
+    <Card title='Editar venta' hoverable>
       <Row>
         <Col span={24}>
           {ventaActual &&
@@ -140,6 +151,9 @@ const VentaEdit = ({ productos, clientes, ventaActual, handleUpdated, handleCanc
             <Radio.Button value={false}>Sin pagar</Radio.Button>
             <Radio.Button value={true}>Pagado</Radio.Button>
           </Radio.Group>
+        </Col>
+        <Col span={12} style={{ marginTop: 10 }}>
+          <Button onClick={handleEliminar}>Eliminar</Button>
         </Col>
       </Row>
       <Divider />

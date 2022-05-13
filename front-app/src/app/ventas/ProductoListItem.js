@@ -18,10 +18,10 @@ const ProductoListItem = ({ item, index, nuevo, handleChangeItem }) => {
         <Col span={6}>
           <InputNumber min={0} max={1000} value={item.value} onChange={handleChangeItemInter} />
         </Col>
-        <Col span={4}>
+        <Col span={4} className="right-align">
           { currencyFormat(precio) }
         </Col>
-        <Col span={4}>
+        <Col span={4} className="right-align">
           { currencyFormat(item.value * precio) }
         </Col>
       </Row>

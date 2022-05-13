@@ -40,6 +40,8 @@
   }
   header, aside {
     display: none;
-    
+  }
+  .hidden-print {
+    display: none;
   }
 }

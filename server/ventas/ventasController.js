@@ -48,3 +48,41 @@ exports.update = async function(req, res) {
 
   res.send({ result: ventaRes })
 }
+
+exports.getUltimasVentas = async function(req, res) {
+  console.log('entra ultimas ventas')
+  try {
+    const ventaRes = await Venta.aggregate(
+      [
+        {
+          $group: {
+            _id: '$cliente.nombre',
+            cliente: { $first: '$cliente' },
+            productos: { $first: '$productos' },
+            pagado: { $first: '$pagado' },
+            estado: { $first: '$estado' },
+            tipo_precio: { $first: '$tipo_precio' },
+            createdAt: { $first: '$createdAt' },
+            updatedAt: { $first: '$updatedAt' },
+          }
+        }
+      ]
+    )
+    console.log('ultimas ventas')
+    res.send({ result: ventaRes })
+  } catch (err) {
+    console.log({ err })
+  }
+}
+
+exports.desactivar = async function(req, res) {
+  const id = req.params.id
+  await Venta.updateOne({ _id: id }, { active: false })
+  res.send({ result: 'Desactivado exitosamente.' })
+}
+
+exports.facturaIndividual = async function(req, res) {
+  const id = req.params.id
+  await Venta.find({ _id: id }, { active: false })
+  res.send({ result: 'Desactivado exitosamente.' })
+}
