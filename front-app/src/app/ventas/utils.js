@@ -10,3 +10,11 @@ export const getPrecio = (venta, producto) => {
   }
   return precio
 }
+
+export const getTotalVenta = (productos, venta) => {
+  const totalVenta = productos.reduce((acc, prod) => {
+    const precio = getPrecio(venta, prod)
+    return acc + (prod.value * precio)
+  }, 0)
+  return totalVenta
+}

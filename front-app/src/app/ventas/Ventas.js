@@ -1,10 +1,17 @@
 import { Row, Col, Table, Alert } from 'antd'
 import useFetch from '../api/useFetch'
-import VentasNew from './VentasNew'
+import VentaNew from './VentaNew'
 import { useDefaultData } from './useDefaultData'
 import './styles.css'
+import { useState } from 'react'
+import VentaEdit from './VentaEdit'
 
 export const Ventas = () => {
+  const handleClientClick = (cliente, venta) => {
+    setVentaActual(venta)
+    console.log(cliente, venta)
+  }
+  const [filteredInfo, setFilteredInfo] = useState(null)
   const {
     productos,
     clientes,
@@ -13,9 +20,8 @@ export const Ventas = () => {
     loading,
     setVentas
   } = useFetch('ventas')
-  const columns = useDefaultData((cliente, venta) => {
-    console.log(cliente, venta)
-  })
+  const columns = useDefaultData(handleClientClick, filteredInfo)
+  const [ventaActual, setVentaActual] = useState(null)
 
   if (error) {
     console.log(error)
@@ -29,13 +35,29 @@ export const Ventas = () => {
     )
   }
 
-  const handleCreatedUpdated = (newVenta) => {
+  const handleCreated = (venta) => {
     setVentas(ventas => {
       return [
         ...ventas,
-        newVenta
+        venta
       ]
     })
+  }
+
+  const handleChangeTable = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter)
+    setFilteredInfo(filters)
+  }
+
+  const handleUpdated = (venta) => {
+    setVentas(ventas => {
+      return ventas.map(el => el._id === venta._id ? venta : el)
+    })
+    setVentaActual(null)
+  }
+
+  const handleCancelar = () => {
+    setVentaActual(null)
   }
 
   return (
@@ -44,8 +66,21 @@ export const Ventas = () => {
       { productos?.length > 0 && (
           <Row>
             <Col span={24}>
-              <VentasNew productos={productos} clientes={clientes} handleCreatedUpdated={handleCreatedUpdated} />
-              <Table dataSource={ventas} columns={columns} />
+              {
+                !ventaActual &&
+                <VentaNew productos={productos} clientes={clientes} venta={ventaActual} handleCreated={handleCreated} />
+              }
+              <Table dataSource={ventas} columns={columns} onChange={handleChangeTable} />
+              {
+                ventaActual &&
+                <VentaEdit
+                  productos={productos}
+                  clientes={clientes}
+                  ventaActual={ventaActual}
+                  handleUpdated={handleUpdated}
+                  handleCancelar={handleCancelar}
+                />
+              }
             </Col>
           </Row>
       )}

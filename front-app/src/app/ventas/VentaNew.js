@@ -2,12 +2,12 @@ import { Card, Col, Row, Select, List, Button, Radio, Divider, Modal, message } 
 import fetch from '../api/fetch'
 import ProductoListItem from './ProductoListItem'
 import { useState } from 'react'
-import { getPrecio, currencyFormat } from './utils'
+import { getTotalVenta, currencyFormat } from './utils'
 import { SaveFilled } from '@ant-design/icons'
 
 const { Option } = Select
 
-const VentasNew = ({ productos, clientes, venta, handleCreatedUpdated }) => {
+const VentaNew = ({ productos, clientes, venta, handleCreated }) => {
   const getProductos = () => {
     if (venta) {
       return productos.map(productoEl => {
@@ -42,19 +42,13 @@ const VentasNew = ({ productos, clientes, venta, handleCreatedUpdated }) => {
       })
       return
     }
-    if (venta) {
-      fetch.put('ventas/edit', nuevo).then((res) => {
-        console.log({ res })
-      })
-    } else {
-      crear(nuevo)
-    }
+    crear(nuevo)
   }
 
   const crear = (nuevo) => {
     fetch.put('ventas', nuevo).then((res) => {
       message.success('Venta creada con exitación')
-      handleCreatedUpdated(res.data.venta)
+      handleCreated(res.data.venta)
     })
   }
 
@@ -85,14 +79,11 @@ const VentasNew = ({ productos, clientes, venta, handleCreatedUpdated }) => {
   }
 
   const footer = () => {
-    const total = productos.reduce((acc, prod) => {
-      const precio = getPrecio(nuevo, prod)
-      return acc + (prod.value * precio)
-    }, 0)
+    const total = getTotalVenta(productos, nuevo)
     return (
       <Row>
         <Col>Total: {currencyFormat(total)}</Col>
-        </Row>
+      </Row>
     )
   }
 
@@ -154,4 +145,4 @@ const VentasNew = ({ productos, clientes, venta, handleCreatedUpdated }) => {
     </Card>
   )
 }
-export default VentasNew
+export default VentaNew

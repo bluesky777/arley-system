@@ -1,4 +1,6 @@
-export const useDefaultData = (handleClientClick) => {
+import { currencyFormat, getTotalVenta } from './utils'
+
+export const useDefaultData = (handleClientClick, filteredInfo) => {
   return [
     {
       title: 'Creación',
@@ -21,9 +23,28 @@ export const useDefaultData = (handleClientClick) => {
       }
     },
     {
-      title: 'Celular',
-      dataIndex: 'cliente_celular',
-      key: 'cliente_celular'
+      title: 'Total',
+      dataIndex: 'productos',
+      key: 'productos',
+      align: 'right',
+      render: (productos, venta) => {
+        const text = currencyFormat(getTotalVenta(productos, venta))
+        const objecyStyle = { background: 'red', color: 'white', fontWeight: 'bold', paddingRight: '2px' }
+        const style = venta.pagado ? {} : objecyStyle
+        return <div style={style}>{text}</div>
+      }
+    },
+    {
+      title: 'Estado',
+      dataIndex: 'estado',
+      key: 'estado',
+      filters: [
+        { text: 'Pedido', value: 'Pedido' },
+        { text: 'Entregado', value: 'Entregado' },
+        { text: 'Cancelado', value: 'Cancelado' }
+      ],
+      filteredValue: filteredInfo ? filteredInfo.estado || null : null,
+      onFilter: (value, record) => record.estado.includes(value)
     },
     {
       title: 'Dirección',

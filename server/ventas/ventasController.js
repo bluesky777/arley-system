@@ -25,7 +25,6 @@ exports.index = async function(req, res) {
 }
 
 exports.insert = async function(req, res) {
-  
   const { body } = req
   const ventaRes = new Venta(body);
   ventaRes.save((err, venta) => {
@@ -39,4 +38,13 @@ exports.insert = async function(req, res) {
     }
     res.send({ venta })
   })
+}
+
+exports.update = async function(req, res) {
+  const { body } = req
+  //const userObjectId = mongoose.Types.ObjectId(userIdString);
+  const ventaRes = await Venta.updateOne({ _id: body._id }, body);
+  //ventaRes.productos = body.productos;
+
+  res.send({ result: ventaRes })
 }
