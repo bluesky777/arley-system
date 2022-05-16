@@ -1,12 +1,12 @@
 import { Row, Col, Button, Card, Spin, Space } from 'antd'
 import { useState } from 'react'
 import fetch from '../api/fetch'
-import { FacturaIndividual } from './FacturaIndividual'
+import { SelectVentasFactura } from './SelectVentasFactura'
 import { UltimasVentas } from './UltimasVentas'
 
 export const Informes = () => {
   const [ventas, setVentas] = useState([])
-  const [ventaFactura, setVentaFactura] = useState([])
+  const [ventasFactura, setVentasFactura] = useState([])
   const [estadoLoading, setEstadoLoading] = useState('inicial')
 
   const handleUltimosPedidos = async () => {
@@ -17,8 +17,8 @@ export const Informes = () => {
   }
   const handleFacturaIndividual = async () => {
     setEstadoLoading('loading')
-    const { data } = await fetch.get('/ventas/factura-individual')
-    setVentaFactura(data.result)
+    const { data } = await fetch.get('/ventas')
+    setVentasFactura(data.ventas)
     setEstadoLoading('loaded')
   }
   return (
@@ -37,7 +37,7 @@ export const Informes = () => {
           { estadoLoading === 'loading' && <Space size='large'><Spin size="large" /></Space> }
 
           {ventas.length > 0 && <UltimasVentas ventas={ventas} />}
-          {ventaFactura.length > 0 && <FacturaIndividual venta={ventaFactura} />}
+          {ventasFactura.length > 0 && <SelectVentasFactura ventas={ventasFactura} />}
         </Col>
       </Row>
     </div>

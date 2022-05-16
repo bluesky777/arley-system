@@ -1,0 +1,56 @@
+h1 {
+  margin-bottom: 0px!important;
+  font-weight: bold!important;
+  color: blue!important;
+}
+h3 {
+  font-size: 11pt!important;
+  margin-top: -5px!important;
+  margin-bottom: 5px!important;
+}
+.hoja-factura__header {
+  border-bottom: 2px solid blue;
+  margin-bottom: 12px;
+}
+table {
+  width: 100%;
+  border: 1px solid;
+  margin-top: 8px;
+}
+td, th {
+  border: 1px solid;
+}
+td:first-child, th:first-child {
+  width: 20px;
+}
+.hoja-factura__firma-img {
+  height: 100px;
+}
+.hoja-factura__firma-text {
+  font-weight: bold;
+  font-style: italic;
+  border-top: 1px solid;
+  padding-top: 4px;
+}
+@media print {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .ant-layout-has-sider>.ant-layout {
+    padding: 14px;
+    padding-right: 0px;
+  }
+  .site-layout-background {
+    padding: 0;
+  }
+  header, aside {
+    display: none;
+  }
+  .hidden-print {
+    display: none!important;
+  }
+  .hoja-factura {
+    break-inside: avoid;
+  }
+}

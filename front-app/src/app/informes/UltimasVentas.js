@@ -38,7 +38,7 @@ export const UltimasVentas = ({ ventas }) => {
         <Col span={3} className="right-align">
           Cantidad:
         </Col>
-        {Object.values(getCantidadProducto(ventas)).map(prod => <Col span={3} className="right-align">{prod}</Col>)}
+        {Object.values(getCantidadProducto(ventas)).map((prod, ind) => <Col span={3} key={ind} className="right-align">{prod}</Col>)}
         <Col span={3} className="right-align">
           {currencyFormat(getTotalTodasVentas(ventas).valorTotal)}
         </Col>

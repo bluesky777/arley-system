@@ -7,7 +7,7 @@ exports.index = async function(req, res) {
   try {
     let productos = await Producto.find({ 'active': true });
     let clientes = await Cliente.find({ 'active': true });
-    let ventas = await Venta.find({ 'active': true });
+    let ventas = await Venta.find({ 'active': true }).sort( { createdAt: -1 } );
     ventas = ventas.map(el => { 
       return {
         ...el._doc, 
@@ -83,6 +83,6 @@ exports.desactivar = async function(req, res) {
 
 exports.facturaIndividual = async function(req, res) {
   const id = req.params.id
-  await Venta.find({ _id: id }, { active: false })
-  res.send({ result: 'Desactivado exitosamente.' })
+  const venta = await Venta.findOne({ _id: id })
+  res.send({ result: venta })
 }

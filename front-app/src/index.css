@@ -17,3 +17,23 @@ code {
 .center-align {
   text-align: center;
 }
+.bold {
+  font-weight: bold;
+}
+@media print {
+  * {
+    padding: 0;
+    margin: 0;
+  }
+  .ant-layout-has-sider>.ant-layout,
+  .site-layout-background  {
+    padding: 0;
+    margin: 0;
+  }
+  header, aside {
+    display: none;
+  }
+  .hidden-print {
+    display: none;
+  }
+}

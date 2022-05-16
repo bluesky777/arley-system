@@ -116,7 +116,7 @@ const VentaNew = ({ productos, clientes, venta, handleCreated }) => {
             dataSource={productos}
             footer={footer()}
             renderItem={(item, index) => (
-              <ProductoListItem item={item} index={index} nuevo={nuevo} handleChangeItem={handleChangeItem} />
+              <ProductoListItem key={index} item={item} index={index} nuevo={nuevo} handleChangeItem={handleChangeItem} />
             )}
           />
         </Col>
